@@ -1,0 +1,50 @@
+body{
+    background-color: aliceblue;
+}
+.movieDisplay{
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 2px;
+    background-color: white;
+    transition: transform 0.4s ease;
+    box-shadow: 0.4s ease;
+    
+    margin: 15px;
+}
+.movieDisplay:hover{
+    transform: scale(1.03);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+.movieDisplay img{
+    width: 200px;
+    padding: 0;
+    
+}
+.reviewText{
+    padding: 20px;
+}
+.reviewMenu col{
+    border: solid 2px red;
+}
+.col{
+    padding: 20px;
+}
+#posterCol{
+    padding: 0;
+}
+.add,col{    
+    padding: 20px;
+    margin-top: 50px;
+    margin-inline: auto;
+}
+button{
+    border-radius: 20px;
+    padding: 30px;
+    max-width: 200px;
+    margin-left: 20px;
+}
+
+.title{
+   font-size:x-large;
+   font-weight: bold;
+}

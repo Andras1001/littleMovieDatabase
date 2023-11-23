@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.js" defer></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/main.css">
+
+    <title>Little Movie Database</title>
+    <link rel="shortcut icon" href="images/video-camera.png" type="image/x-icon">
+</head>
+<body>
+
+    <div class="container" x-data="app()" x-init="fetchMovies">
+
+        <!-- Add new movie menu controls -->
+        <div class="add row">
+            <input class="col" type="text" x-model="newMovieTitle" placeholder="Enter movie title">
+            <button class="col" @click="addMovie">Add Movie</button>
+        </div>
+
+        <!-- Generating movieDisplay divs for each of the movies in the movies array -->        
+        <template x-for="movie in movies" :key="movie.id">        
+            <div @click="toReviews(movie.id)" class="movieDisplay row">
+
+                <div id="posterCol" class="col">
+                    <img id="poster" :src="movie.posterURL" alt="">
+                </div>                    
+                <div class="title col" x-text="movie.title"></div>
+                <div class="col" x-text="movie.year"></div>
+                <div class="col" x-text="movie.genre"></div>
+                <div class="col" x-text="movie.actors"></div>
+                <div class="col" x-text="'IMDb rating: '+movie.imdbRating"></div>
+
+            </div>                
+        </template>
+    </div>    
+
+<script>
+    function app() {
+        return {
+            movies: [],
+            newMovieTitle: '',
+
+            //Fetching the movies from the API
+            fetchMovies() {
+                fetch('https://localhost:7010/api/movies')
+                .then(response => response.json())
+                .then(data => {
+                    this.movies = data;
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+            },
+            
+            //This function does not work
+            addMovie(){                
+                fetch('https://localhost:7010/api/movies',{
+                    method:'POST',
+                    headers:{
+                        'Content-Type':'application/json',
+                    },
+                    body:this.newMovieTitle,
+
+                })
+                .then(res=>res.json())                
+                .catch(err=>console.log(err));
+                
+            }
+        };
+    }
+    //Function to navigate between pages. (Future addReview page)
+    function toReviews(movieId){
+        //Sending the id of the chosen movie to the reviews page for filtering.
+        window.location.href = `reviews.html?movieId=${movieId}`;
+    }
+</script>
+</body>
+</html>
